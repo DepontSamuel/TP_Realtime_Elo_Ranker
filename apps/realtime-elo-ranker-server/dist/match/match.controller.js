@@ -14,48 +14,90 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MatchController = void 0;
 const common_1 = require("@nestjs/common");
+const player_service_1 = require("../player/player.service");
+const match_service_1 = require("./match.service");
 const app_service_1 = require("../app.service");
 let MatchController = class MatchController {
-    constructor(appService) {
+    constructor(playerService, matchService, appService) {
+        this.playerService = playerService;
+        this.matchService = matchService;
         this.appService = appService;
     }
-    async publishMatchResults(body) {
-        const { winner, loser, draw } = body;
-        if (!winner || !loser) {
-            throw new common_1.HttpException({
-                code: 422,
-                message: 'Either the winner or the loser specified does not exist',
-            }, common_1.HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-        const winnerPlayer = this.appService.getPlayer(winner);
-        const loserPlayer = this.appService.getPlayer(loser);
-        console.log(winnerPlayer, loserPlayer);
+    async getAllMatches() {
+        return await this.matchService.getMatches();
+    }
+    async publishMatchResult(matchResult) {
+        const { winner, loser, draw } = matchResult;
         if (draw) {
             return {
-                winner: winnerPlayer,
-                loser: loserPlayer,
+                ok: true,
+                code: 200,
+                message: 'Match nul',
             };
         }
-        else {
-            winnerPlayer.rank += 10;
-            loserPlayer.rank -= 10;
+        else if (!winner || !loser) {
             return {
-                winner: winnerPlayer,
-                loser: loserPlayer,
+                ok: false,
+                code: 400,
+                message: 'Il manque un joueur',
             };
         }
+        const winnerPlayer = await this.playerService.getPlayer(winner);
+        const loserPlayer = await this.playerService.getPlayer(loser);
+        if (!winnerPlayer || !loserPlayer) {
+            return {
+                ok: false,
+                code: 400,
+                message: "Un des joueurs n'existe pas",
+            };
+        }
+        const K = 32;
+        const expectedScoreWinner = 1 / (1 + Math.pow(10, (loserPlayer.rank - winnerPlayer.rank) / 400));
+        const expectedScoreLoser = 1 / (1 + Math.pow(10, (winnerPlayer.rank - loserPlayer.rank) / 400));
+        winnerPlayer.rank += K * (1 - expectedScoreWinner);
+        loserPlayer.rank += K * (0 - expectedScoreLoser);
+        winnerPlayer.rank = Math.round(winnerPlayer.rank);
+        loserPlayer.rank = Math.round(loserPlayer.rank);
+        await this.playerService.updatePlayer(winnerPlayer);
+        await this.playerService.updatePlayer(loserPlayer);
+        this.matchService.addMatch({
+            winner: winnerPlayer.id,
+            loser: loserPlayer.id,
+        });
+        this.appService.notifyObservers(winnerPlayer);
+        this.appService.notifyObservers(loserPlayer);
+        return {
+            ok: true,
+            code: 200,
+            winner: {
+                id: winner,
+                rank: winnerPlayer.rank,
+            },
+            loser: {
+                id: loser,
+                rank: loserPlayer.rank,
+            },
+        };
     }
 };
 exports.MatchController = MatchController;
 __decorate([
-    (0, common_1.Post)('publish'),
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], MatchController.prototype, "getAllMatches", null);
+__decorate([
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], MatchController.prototype, "publishMatchResults", null);
+], MatchController.prototype, "publishMatchResult", null);
 exports.MatchController = MatchController = __decorate([
     (0, common_1.Controller)('api/match'),
-    __metadata("design:paramtypes", [app_service_1.AppService])
+    __metadata("design:paramtypes", [player_service_1.playerService,
+        match_service_1.MatchService,
+        app_service_1.AppService])
 ], MatchController);
 //# sourceMappingURL=match.controller.js.map

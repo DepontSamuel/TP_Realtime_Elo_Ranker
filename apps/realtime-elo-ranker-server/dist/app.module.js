@@ -12,14 +12,18 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const player_controller_1 = require("./player/player.controller");
 const match_controller_1 = require("./match/match.controller");
+const player_service_1 = require("./player/player.service");
+const match_service_1 = require("./match/match.service");
+const event_emitter_1 = require("@nestjs/event-emitter");
+const ranking_controller_1 = require("./ranking/ranking.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
-        controllers: [app_controller_1.AppController, player_controller_1.PlayerController, match_controller_1.MatchController],
-        providers: [app_service_1.AppService],
+        imports: [event_emitter_1.EventEmitterModule.forRoot()],
+        controllers: [app_controller_1.AppController, player_controller_1.PlayerController, match_controller_1.MatchController, ranking_controller_1.RankingController],
+        providers: [app_service_1.AppService, player_service_1.playerService, match_service_1.MatchService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

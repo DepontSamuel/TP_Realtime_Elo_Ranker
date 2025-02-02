@@ -15,17 +15,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlayerController = void 0;
 const common_1 = require("@nestjs/common");
 const common_2 = require("@nestjs/common");
-const app_service_1 = require("../app.service");
+const player_service_1 = require("./player.service");
 const common_3 = require("@nestjs/common");
 let PlayerController = class PlayerController {
-    constructor(appService) {
-        this.appService = appService;
+    constructor(playerService) {
+        this.playerService = playerService;
     }
     getPlayers() {
-        return this.appService.getPlayers();
+        return this.playerService.getPlayers();
     }
-    addPlayer(playerData) {
-        return this.appService.addPlayer(playerData.id);
+    addPlayer(id) {
+        if (!id) {
+            return {
+                code: 422,
+                message: 'No ID specified',
+            };
+        }
+        return this.playerService.addPlayer(id);
     }
 };
 exports.PlayerController = PlayerController;
@@ -33,17 +39,17 @@ __decorate([
     (0, common_2.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", void 0)
 ], PlayerController.prototype, "getPlayers", null);
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_3.Body)()),
+    __param(0, (0, common_3.Body)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], PlayerController.prototype, "addPlayer", null);
 exports.PlayerController = PlayerController = __decorate([
     (0, common_1.Controller)('api/player'),
-    __metadata("design:paramtypes", [app_service_1.AppService])
+    __metadata("design:paramtypes", [player_service_1.playerService])
 ], PlayerController);
 //# sourceMappingURL=player.controller.js.map

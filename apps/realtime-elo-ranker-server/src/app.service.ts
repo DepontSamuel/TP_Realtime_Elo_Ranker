@@ -1,38 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-
-
-export interface Player {
-  id: string;
-  rank: number;
-}
+import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class AppService {
-  private players: Player[] = [];
+  constructor(private readonly eventEmitter: EventEmitter2) {}
 
-  getHello(): string {
-    return 'Hello World!';
+  getEventEmitter() {
+    return this.eventEmitter;
   }
 
-  addPlayer(id: string): void {
-    let player: Player = {
-      id,
-      rank: 0,
-    };
-    this.players.push(player);
+  notifyObservers(player: any) {
+    this.eventEmitter.emit('RankingUpdate', player);
   }
-
-  getPlayers(): Player[] {
-    return this.players;
-  }
-
-  getPlayer(id: string): Player {
-    const player = this.players.find(player => player.id === id);
-    if (!player) {
-      throw new NotFoundException(`Player with id ${id} not found`);
-    }
-    return player;
-  }
-
-  
 }

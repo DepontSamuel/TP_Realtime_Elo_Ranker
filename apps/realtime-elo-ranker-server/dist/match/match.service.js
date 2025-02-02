@@ -6,12 +6,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
+exports.MatchService = void 0;
 const common_1 = require("@nestjs/common");
-let AppController = class AppController {
+const match_entity_1 = require("../model/match.entity");
+let MatchService = class MatchService {
+    constructor() {
+        this.matches = [];
+    }
+    async getMatches() {
+        return this.matches;
+    }
+    async addMatch(match) {
+        const newMatch = new match_entity_1.Match();
+        newMatch.winner = match.winner;
+        newMatch.loser = match.loser;
+        this.matches.push(newMatch);
+        return newMatch;
+    }
 };
-exports.AppController = AppController;
-exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)()
-], AppController);
-//# sourceMappingURL=app.controller.js.map
+exports.MatchService = MatchService;
+exports.MatchService = MatchService = __decorate([
+    (0, common_1.Injectable)()
+], MatchService);
+//# sourceMappingURL=match.service.js.map

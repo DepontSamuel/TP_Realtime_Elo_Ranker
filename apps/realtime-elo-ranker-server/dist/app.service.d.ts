@@ -1,11 +1,7 @@
-export interface Player {
-    id: string;
-    rank: number;
-}
+import { EventEmitter2 } from '@nestjs/event-emitter';
 export declare class AppService {
-    private players;
-    getHello(): string;
-    addPlayer(id: string): void;
-    getPlayers(): Player[];
-    getPlayer(id: string): Player;
+    private readonly eventEmitter;
+    constructor(eventEmitter: EventEmitter2);
+    getEventEmitter(): EventEmitter2;
+    notifyObservers(player: any): void;
 }

@@ -9,23 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppService = void 0;
-const common_1 = require("@nestjs/common");
-const event_emitter_1 = require("@nestjs/event-emitter");
-let AppService = class AppService {
-    constructor(eventEmitter) {
-        this.eventEmitter = eventEmitter;
-    }
-    getEventEmitter() {
-        return this.eventEmitter;
-    }
-    notifyObservers(player) {
-        this.eventEmitter.emit('RankingUpdate', player);
-    }
+exports.Player = void 0;
+const typeorm_1 = require("typeorm");
+let Player = class Player {
 };
-exports.AppService = AppService;
-exports.AppService = AppService = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [event_emitter_1.EventEmitter2])
-], AppService);
-//# sourceMappingURL=app.service.js.map
+exports.Player = Player;
+__decorate([
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", String)
+], Player.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Player.prototype, "rank", void 0);
+exports.Player = Player = __decorate([
+    (0, typeorm_1.Entity)()
+], Player);
+//# sourceMappingURL=player.entity.js.map

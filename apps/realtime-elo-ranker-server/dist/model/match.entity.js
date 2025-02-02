@@ -9,23 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppService = void 0;
-const common_1 = require("@nestjs/common");
-const event_emitter_1 = require("@nestjs/event-emitter");
-let AppService = class AppService {
-    constructor(eventEmitter) {
-        this.eventEmitter = eventEmitter;
-    }
-    getEventEmitter() {
-        return this.eventEmitter;
-    }
-    notifyObservers(player) {
-        this.eventEmitter.emit('RankingUpdate', player);
-    }
+exports.Match = void 0;
+const typeorm_1 = require("typeorm");
+let Match = class Match {
 };
-exports.AppService = AppService;
-exports.AppService = AppService = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [event_emitter_1.EventEmitter2])
-], AppService);
-//# sourceMappingURL=app.service.js.map
+exports.Match = Match;
+__decorate([
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
+], Match.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Match.prototype, "winner", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Match.prototype, "loser", void 0);
+exports.Match = Match = __decorate([
+    (0, typeorm_1.Entity)()
+], Match);
+//# sourceMappingURL=match.entity.js.map

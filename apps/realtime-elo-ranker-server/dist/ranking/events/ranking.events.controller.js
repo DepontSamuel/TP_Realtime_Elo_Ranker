@@ -18,7 +18,7 @@ let RankingEventsController = class RankingEventsController {
         this.appService = appService;
     }
     subscribeToRankingUpdates() {
-        return new rxjs_1.Observable(observer => {
+        return new rxjs_1.Observable((observer) => {
             const rankingUpdates = this.appService.getEventEmitter();
             rankingUpdates.on('RankingUpdate', (update) => {
                 observer.next(new MessageEvent('message', {
@@ -44,6 +44,7 @@ let RankingEventsController = class RankingEventsController {
 exports.RankingEventsController = RankingEventsController;
 __decorate([
     (0, common_1.Sse)(),
+    (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", rxjs_1.Observable)

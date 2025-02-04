@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Player } from '../model/player.entity';
+import { AppService } from 'src/app.service';
 
 @Injectable()
 export class playerService {
+  constructor(private appService: AppService) {}
   private players: Player[] = [];
 
   async getPlayers(): Promise<Player[]> {
@@ -14,6 +16,7 @@ export class playerService {
     player.id = id;
     player.rank = 1000;
     this.players.push(player);
+    this.appService.notifyObservers(player);
     return player;
   }
 

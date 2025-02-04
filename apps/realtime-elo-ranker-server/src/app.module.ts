@@ -7,10 +7,17 @@ import { playerService } from './player/player.service';
 import { MatchService } from './match/match.service';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { RankingController } from './ranking/ranking.controller';
+import { RankingEventsController } from './ranking/events/ranking.events.controller';
 
 @Module({
   imports: [EventEmitterModule.forRoot()],
-  controllers: [AppController, PlayerController, MatchController, RankingController],
+  controllers: [
+    AppController,
+    PlayerController,
+    MatchController,
+    RankingController,
+    RankingEventsController,
+  ],
   providers: [AppService, playerService, MatchService],
 })
 export class AppModule {}

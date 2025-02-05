@@ -16,10 +16,12 @@ exports.PlayerController = void 0;
 const common_1 = require("@nestjs/common");
 const common_2 = require("@nestjs/common");
 const player_service_1 = require("./player.service");
+const app_service_1 = require("../app.service");
 const common_3 = require("@nestjs/common");
 let PlayerController = class PlayerController {
-    constructor(playerService) {
+    constructor(playerService, AppService) {
         this.playerService = playerService;
+        this.AppService = AppService;
     }
     getPlayers() {
         return this.playerService.getPlayers();
@@ -31,7 +33,9 @@ let PlayerController = class PlayerController {
                 message: 'No ID specified',
             };
         }
-        return this.playerService.addPlayer(id);
+        this.playerService.addPlayer(id);
+        this.AppService.notifyObservers({ id: id, rank: 1000 });
+        return;
     }
 };
 exports.PlayerController = PlayerController;
@@ -50,6 +54,7 @@ __decorate([
 ], PlayerController.prototype, "addPlayer", null);
 exports.PlayerController = PlayerController = __decorate([
     (0, common_1.Controller)('api/player'),
-    __metadata("design:paramtypes", [player_service_1.playerService])
+    __metadata("design:paramtypes", [player_service_1.playerService,
+        app_service_1.AppService])
 ], PlayerController);
 //# sourceMappingURL=player.controller.js.map

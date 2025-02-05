@@ -10,18 +10,15 @@ exports.MatchService = void 0;
 const common_1 = require("@nestjs/common");
 const match_entity_1 = require("../model/match.entity");
 let MatchService = class MatchService {
-    constructor() {
-        this.matches = [];
-    }
     async getMatches() {
-        return this.matches;
+        const matches = await match_entity_1.Match.find();
+        return JSON.stringify(matches);
     }
     async addMatch(match) {
         const newMatch = new match_entity_1.Match();
         newMatch.winner = match.winner;
         newMatch.loser = match.loser;
-        this.matches.push(newMatch);
-        return newMatch;
+        await newMatch.save();
     }
 };
 exports.MatchService = MatchService;

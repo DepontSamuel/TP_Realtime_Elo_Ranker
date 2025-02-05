@@ -3,17 +3,15 @@ import { Match } from '../model/match.entity';
 
 @Injectable()
 export class MatchService {
-  private matches: Match[] = [];
-
-  async getMatches(): Promise<Match[]> {
-    return this.matches;
+  async getMatches(): Promise<string> {
+    const matches = await Match.find();
+    return JSON.stringify(matches);
   }
 
-  async addMatch(match: any): Promise<Match> {
+  async addMatch(match: any): Promise<void> {
     const newMatch = new Match();
     newMatch.winner = match.winner;
     newMatch.loser = match.loser;
-    this.matches.push(newMatch);
-    return newMatch;
+    await newMatch.save();
   }
 }

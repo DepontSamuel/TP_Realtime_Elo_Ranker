@@ -29,13 +29,29 @@ let PlayerController = class PlayerController {
     addPlayer(id) {
         if (!id) {
             return {
-                code: 422,
-                message: 'No ID specified',
+                ok: false,
+                code: 400,
+                message: 'Il manque un id',
             };
         }
-        this.playerService.addPlayer(id);
-        this.AppService.notifyObservers({ id: id, rank: 1000 });
-        return;
+        this.playerService.getPlayer(id).then((player) => {
+            if (player) {
+                return {
+                    ok: false,
+                    code: 400,
+                    message: 'Le joueur existe déjà',
+                };
+            }
+            else {
+                this.playerService.addPlayer(id);
+                this.AppService.notifyObservers({ id: id, rank: 1000 });
+                return {
+                    ok: true,
+                    code: 200,
+                    message: 'Joueur ajouté',
+                };
+            }
+        });
     }
 };
 exports.PlayerController = PlayerController;
@@ -54,7 +70,7 @@ __decorate([
 ], PlayerController.prototype, "addPlayer", null);
 exports.PlayerController = PlayerController = __decorate([
     (0, common_1.Controller)('api/player'),
-    __metadata("design:paramtypes", [player_service_1.playerService,
+    __metadata("design:paramtypes", [player_service_1.PlayerService,
         app_service_1.AppService])
 ], PlayerController);
 //# sourceMappingURL=player.controller.js.map

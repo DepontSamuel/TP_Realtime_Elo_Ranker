@@ -1,7 +1,7 @@
 import { Player } from '../model/player.entity';
-export declare class playerService {
+export declare class PlayerService {
     getPlayers(): Promise<string>;
+    getPlayer(id: string): Promise<Player | undefined>;
     addPlayer(id: string): Promise<any>;
-    getPlayer(id: string): Promise<Player>;
     updatePlayer(player: Player): Promise<void>;
 }

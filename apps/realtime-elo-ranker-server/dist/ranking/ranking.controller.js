@@ -37,6 +37,6 @@ __decorate([
 ], RankingController.prototype, "getRanking", null);
 exports.RankingController = RankingController = __decorate([
     (0, common_1.Controller)('api/ranking'),
-    __metadata("design:paramtypes", [player_service_1.playerService])
+    __metadata("design:paramtypes", [player_service_1.PlayerService])
 ], RankingController);
 //# sourceMappingURL=ranking.controller.js.map

@@ -1,9 +1,9 @@
 import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
-import { playerService } from '../player/player.service';
+import { PlayerService } from '../player/player.service';
 
 @Controller('api/ranking')
 export class RankingController {
-  constructor(private readonly playerService: playerService) {}
+  constructor(private readonly playerService: PlayerService) {}
 
   @Get()
   async getRanking() {

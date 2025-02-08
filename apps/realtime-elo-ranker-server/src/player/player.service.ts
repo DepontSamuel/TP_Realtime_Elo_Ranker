@@ -3,22 +3,19 @@ import { Player } from '../model/player.entity';
 import { AppService } from 'src/app.service';
 
 @Injectable()
-export class playerService {
+export class PlayerService {
   async getPlayers(): Promise<string> {
     const players = await Player.find({ order: { rank: 'DESC' } });
     return JSON.stringify(players);
   }
 
-  async addPlayer(id: string): Promise<any> {
-    await Player.insert({ id: id, rank: 1000 });
+  async getPlayer(id: string): Promise<Player | undefined> {
+    const player = await Player.findOne({ where: { id: id } });
+    return player || undefined;
   }
 
-  async getPlayer(id: string): Promise<Player> {
-    const player = await Player.findOne({ where: { id: id } });
-    if (!player) {
-      throw new NotFoundException(`Player with id ${id} not found`);
-    }
-    return player;
+  async addPlayer(id: string): Promise<any> {
+    await Player.insert({ id: id, rank: 1000 });
   }
 
   async updatePlayer(player: Player): Promise<void> {

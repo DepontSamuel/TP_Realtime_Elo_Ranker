@@ -4,7 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PlayerController } from './player/player.controller';
 import { MatchController } from './match/match.controller';
-import { playerService } from './player/player.service';
+import { PlayerService } from './player/player.service';
 import { MatchService } from './match/match.service';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { RankingController } from './ranking/ranking.controller';
@@ -27,6 +27,6 @@ import { RankingEventsController } from './ranking/events/ranking.events.control
     RankingController,
     RankingEventsController,
   ],
-  providers: [AppService, playerService, MatchService],
+  providers: [AppService, PlayerService, MatchService],
 })
 export class AppModule {}

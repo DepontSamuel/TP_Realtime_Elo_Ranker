@@ -1,12 +1,12 @@
 import { Controller, Post, Get, Body } from '@nestjs/common';
-import { playerService } from 'src/player/player.service';
+import { PlayerService } from '../player/player.service';
 import { MatchService } from './match.service';
-import { AppService } from 'src/app.service';
+import { AppService } from '../app.service';
 
 @Controller('api/match')
 export class MatchController {
   constructor(
-    private playerService: playerService,
+    private playerService: PlayerService,
     private matchService: MatchService,
     private appService: AppService,
   ) {}

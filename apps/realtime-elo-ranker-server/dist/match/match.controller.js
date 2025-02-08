@@ -96,7 +96,7 @@ __decorate([
 ], MatchController.prototype, "publishMatchResult", null);
 exports.MatchController = MatchController = __decorate([
     (0, common_1.Controller)('api/match'),
-    __metadata("design:paramtypes", [player_service_1.playerService,
+    __metadata("design:paramtypes", [player_service_1.PlayerService,
         match_service_1.MatchService,
         app_service_1.AppService])
 ], MatchController);

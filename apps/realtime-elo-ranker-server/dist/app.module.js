@@ -39,7 +39,7 @@ exports.AppModule = AppModule = __decorate([
             ranking_controller_1.RankingController,
             ranking_events_controller_1.RankingEventsController,
         ],
-        providers: [app_service_1.AppService, player_service_1.playerService, match_service_1.MatchService],
+        providers: [app_service_1.AppService, player_service_1.PlayerService, match_service_1.MatchService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

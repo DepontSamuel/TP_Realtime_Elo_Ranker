@@ -1,11 +1,11 @@
-import { playerService } from 'src/player/player.service';
+import { PlayerService } from '../player/player.service';
 import { MatchService } from './match.service';
-import { AppService } from 'src/app.service';
+import { AppService } from '../app.service';
 export declare class MatchController {
     private playerService;
     private matchService;
     private appService;
-    constructor(playerService: playerService, matchService: MatchService, appService: AppService);
+    constructor(playerService: PlayerService, matchService: MatchService, appService: AppService);
     getAllMatches(): Promise<any>;
     publishMatchResult(matchResult: {
         winner: string;
